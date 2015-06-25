@@ -37,15 +37,16 @@ var Comment = React.createClass({
 ## state 和 props的区别
 * props 是一种从父级向子级传递数据的方式。
 * state 仅用于实现交互功能，也就是说，数据随着时间变化。
+
 ##### 让我们分析每一项，指出哪一个是 state 。简单地对每一项数据提出三个问题：
 1. 是否是从父级通过 props 传入的？如果是，可能不是 state 。
 2. 是否会随着时间改变？如果不是，可能不是 state 。
 3. 能根据组件中其它 state 数据或者 props 计算出来吗？如果是，就不是 state 。
 
 ## 直接在标签上写style
-`<th colspan="2" style={{text-align: 'left'}}>{this.props.category}</th>`
+`<th colspan="2" style={{text-align: 'left'}}>{this.props.category}</th>` 
 或 
-`<th colspan="2" style={{textAlign: 'left'}}>{this.props.category}</th>`
+`<th colspan="2" style={{textAlign: 'left'}}>{this.props.category}</th>` 
 
 
 ## label for 使用 htmlFor (待确定??为什么会这样)
