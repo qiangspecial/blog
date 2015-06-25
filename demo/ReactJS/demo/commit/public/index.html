@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hello React 评论框</title>
+	<!-- Not present in the tutorial. Just for basic styling. -->
+	<link rel="stylesheet" href="css/base.css" />
+	<script src="lib/react.min.js"></script>
+	<script src="lib/JSXTransformer.min.js"></script>
+	<script src="lib/jquery.min.js"></script>
+	<script src="lib/marked.min.js"></script>
+	<script src="lib/showdown.min.js"></script>
+</head>
+<body>
+	<div id="content"></div>
+	<!-- <script type="text/jsx;harmony=true" src="scripts/example.js"></script>-->
+<script type="text/jsx">
+	// 评论框数据
+	var commentData = [
+		{author: "Pete Hunt", text: "This is one comment"},
+		{author: "Jordan Walke", text: "This is *another* comment"}
+	];
+
+	// 评论框
+	var CommentBox = React.createClass({
+		loadCommentsFromServer: function() {
+			$.ajax({
+				url: this.props.url,
+				dataType: 'json',
+				success: function(data) {
+					this.setState({data: data});
+				}.bind(this),
+				error: function(xhr, status, err) {
+					console.error(this.props.url, status, err.toString());
+				}.bind(this)
+			});
+		},
+		getInitialState: function() {
+			return {data: []};
+		},
+		componentDidMount: function() {
+			this.loadCommentsFromServer();
+    		setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+		},
+		handleCommentSubmit: function(comment) {
+			console.log(comment);
+			// 前端先添加到页面
+			var comments = this.state.data;
+			var newComments = comments.concat([comment]);
+			this.setState({data: newComments});
+			// 提交给后端
+			$.ajax({
+				url: this.props.url,
+				dataType: 'json',
+				type: 'POST',
+				data: comment,
+				success: function(data) {
+					this.setState({data: data});
+				}.bind(this),
+				error: function(xhr, status, err) {
+					console.error(this.props.url, status, err.toString());
+				}.bind(this)
+			});
+		},
+		render: function() {
+			return (
+				<div className="commentBox">
+					<h1>Comments</h1>
+					<CommentList data={this.state.data} />
+					<CommentForm onCommentSubmit={this.handleCommentSubmit} />
+				</div>
+			);
+		}
+	});
+
+	// 评论列表
+	var CommentList = React.createClass({
+		render: function() {
+			var commentNodes = this.props.data.map(function(comment) {
+				return (
+					<Comment author={comment.author}>
+						{comment.text}
+					</Comment>
+				)
+			});
+			return (
+				<div className="commentList">
+					{commentNodes}
+				</div>
+			);
+		}
+	});
+
+	// 评论内容
+	var converter = new Showdown.converter();
+	var Comment = React.createClass({
+		render: function() {
+			var rawMarkup = converter.makeHtml(this.props.children.toString());
+			return (
+				<div className="comment">
+					<h2 className="commentAuthor">{this.props.author}</h2>
+					<span dangerouslySetInnerHTML={{__html: rawMarkup}} />
+				</div>	
+			)
+		}
+	});
+
+	// 表单
+	var CommentForm = React.createClass({
+		handleSubmit: function(e) {
+			console.log(this.refs)
+			e.preventDefault();
+			var author = this.refs.author.getDOMNode().value.trim();
+			var text = this.refs.text.getDOMNode().value.trim();
+			if (!text || !author) {
+				return;
+			}
+			this.props.onCommentSubmit({"author": author, "text": text});
+			// TODO: send request to the server
+			this.refs.author.getDOMNode().value = '';
+			this.refs.text.getDOMNode().value = '';
+			return;
+		},
+		render: function() {
+			return (
+				<form className="commentForm" onSubmit={this.handleSubmit}>
+					<input type="text" placeholder="Your name" ref="author" />
+					<input type="text" placeholder="Say something..." ref="text" />
+					<input type="submit" value="Post" aa="cc" />
+				</form>
+			);
+		}
+	});
+
+	React.render(<CommentBox url="comments.json" pollInterval={2000} />, document.getElementById("content"));
+</script>
+</body>
+</html>

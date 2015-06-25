@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>过滤</title>
+	<script src="lib/react.min.js"></script>
+	<!-- <script src="lib/JSXTransformer.min.js"></script> -->
+	<script src="lib/jquery.min.js"></script>
+	<!-- <script src="lib/marked.min.js"></script> -->
+	<!-- <script src="lib/showdown.min.js"></script> -->
+<style>
+body {
+	padding: 20px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #333;
+}
+th {
+	text-align: left;
+}
+</style>
+</head>
+<body>
+<div id="filterable">
+	
+</div>
+<br><hr><br>
+<form>
+	<input type="text" placeholder="Search...">
+	<p>
+		<label for="pro"><input type="checkbox" name="" id="pro">Only show products in stock</label>
+	</p>
+</form>
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Price</th>
+	</tr>
+	<tr>
+		<th colspan="2">Sporting Goods</th>
+	</tr>
+	<tr>
+		<td>Football</td>
+		<td>$49</td>
+	</tr>
+	<tr>
+		<th colspan="2">Electronics</th>
+	</tr>
+	<tr>
+		<td>Football</td>
+		<td>$49</td>
+	</tr>
+</table>
+<script src="./build/filterable.js"></script>
+<!-- <script>
+ var data = [{
+		category: "Sporting Goods",
+		price: "$49.99",
+		stocked: true,
+		name: "Football"
+	}, {
+		category: "Sporting Goods",
+		price: "$9.99",
+		stocked: true,
+		name: "Baseball"
+	}, {
+		category: "Sporting Goods",
+		price: "$29.99",
+		stocked: false,
+		name: "Basketball"
+	}, {
+		category: "Electronics",
+		price: "$99.99",
+		stocked: true,
+		name: "iPod Touch"
+	}, {
+		category: "Electronics",
+		price: "$399.99",
+		stocked: false,
+		name: "iPhone 5"
+	}, {
+		category: "Electronics",
+		price: "$199.99",
+		stocked: true,
+		name: "Nexus 7"
+	}];
+
+/**
+	component 
+
+	filterableProduct
+		* searchBar
+		* productTable
+			* ProductCategoryRow
+			* ProductRow
+ */
+
+var FilterableProduct = React.createClass({
+	render: function() {
+		return (
+			<div></div>
+		);
+	}
+});
+</script> -->
+</body>
+</html>
