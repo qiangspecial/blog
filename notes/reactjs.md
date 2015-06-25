@@ -45,7 +45,7 @@ var Comment = React.createClass({
 
 ## 直接在标签上写style
 `<th colspan="2" style={{text-align: 'left'}}>{this.props.category}</th>` 
-或 
+<br>或<br>
 `<th colspan="2" style={{textAlign: 'left'}}>{this.props.category}</th>` 
 
 
