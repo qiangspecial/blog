@@ -1,6 +1,6 @@
-# 那些要注意的东西
+### 那些要注意的东西
 
-
+<hr>
 #### 组件名称大写开头
 ```javascript
 var CommentBox = React.createClass({
@@ -70,6 +70,7 @@ render: function() {
 }
 ```
 
+<hr>
 #### render 注意: 任何数据都要用一个组件包着
 __错误的写法__
 ```javascript
